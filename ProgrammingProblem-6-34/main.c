@@ -1,13 +1,3 @@
-/*
- ============================================================================
- Name        : ProgrammingProblem-6-33.c
- Author      : Supra
- Version     :
- Copyright   : -
- Description : Semaphore test
- ============================================================================
- */
-
 #include <pthread.h>
 #include <stdbool.h>
 #include <stdio.h>
