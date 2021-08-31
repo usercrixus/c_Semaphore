@@ -1,5 +1,5 @@
 # c_Semaphore
-<h3>Implement Semaphore in c :</h3>
+<h3>Implement fifo Semaphore in c :</h3>
 <p>Here is an example of how implement a semaphore in c.</br>
 For more information on semaphore please visit <a href="https://en.wikipedia.org/wiki/Semaphore_(programming)">wikipedia</a>.</p>
 
