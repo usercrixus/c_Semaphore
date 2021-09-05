@@ -29,7 +29,6 @@ void sem_remove(Semaphore* sem){
 }
 
 void sem_push(Semaphore* sem, pthread_t *thread){
-    pthread_mutex_lock(&sem->mutex); // prevent race condition
     // this is classic linked list algorithm
     SemaphoreQueue* toPush = (SemaphoreQueue*)malloc(sizeof(SemaphoreQueue));
     toPush->process = thread;
@@ -43,16 +42,17 @@ void sem_push(Semaphore* sem, pthread_t *thread){
         }
         buffer->next = toPush;
     }
-    pthread_mutex_unlock(&sem->mutex); // end of critical section
 }
 
 void sem_access(Semaphore* sem, pthread_t *thread, int* instanceId){
-
+    pthread_mutex_lock(&sem->mutex); // prevent race condition
     if(atomic_fetch_sub(&sem->size, sem->cost) < sem->cost ){ // semaphore is full, interupt the thread and push it to the queue
         sem_push(sem, thread);
+        pthread_mutex_unlock(&sem->mutex); // end of critical section
         printf("Instance %d wait\n", *instanceId);
         pause();
     }else { // semaphore isn't full and not blocking.
+        pthread_mutex_unlock(&sem->mutex); // end of critical section
         sleep(1); // just to test
     }
 }
